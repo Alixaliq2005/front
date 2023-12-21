@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Table(name = "bank_accounts")
 public class BankAccount {
 	
 	@Id

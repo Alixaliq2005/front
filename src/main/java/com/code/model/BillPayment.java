@@ -13,24 +13,25 @@ import java.time.LocalDateTime;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Table(name = "bill_payments")
 public class BillPayment {
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long billId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long billId;
 
-	private BillType billtype;
+    private BillType billtype;
 
-	private TransactionType transactionType;
+    private TransactionType transactionType;
 
-	private Double amount;
+    private Double amount;
 
-	private LocalDateTime time;
+    private LocalDateTime time;
 
-	@ManyToOne
-	@JsonIgnore
-	@ToString.Exclude
-	private Wallet wallet;
+    @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
+    private Wallet wallet;
 
 }

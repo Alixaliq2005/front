@@ -11,6 +11,8 @@ public enum Errors implements ErrorResponse {
 
     WALLET_NOT_FOUND("WALLET_NOT_FOUND", HttpStatus.NO_CONTENT, "Wallet Not Found"),
 
+    WALLET_IS_EXISTS("WALLET_IS_EXISTS", HttpStatus.NO_CONTENT, "Wallet is already exists"),
+
     USER_NOT_FOUND("USER_NOT_FOUND", HttpStatus.NO_CONTENT, "User Not Found"),
 
     BENEFICIARY_NOT_FOUND("BENEFICIARY_NOT_FOUND", HttpStatus.NO_CONTENT, "Beneficiary Not Found"),

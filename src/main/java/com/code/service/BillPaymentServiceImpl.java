@@ -55,7 +55,6 @@ public class BillPaymentServiceImpl implements BillPaymentService {
 		Transaction transaction = Transaction.builder()
 				.description(billPayment.getBilltype() + "successfull")
 				.amount(billPayment.getAmount())
-				.transactionDate(billPayment.getTime())
 				.transactionType(billPayment.getTransactionType())
 				.build();
 		transactionRepository.save(transaction);

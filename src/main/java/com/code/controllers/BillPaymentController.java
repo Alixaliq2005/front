@@ -6,24 +6,34 @@ import com.code.service.BillPaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/billPayment")
 public class BillPaymentController {
 
-	private final BillPaymentService billPaymentService;
+    private final BillPaymentService billPaymentService;
 
-	@PostMapping("/{customerId}/post")
-	public ResponseEntity<BillPaymentResponse> addNewBillPaymentDetails(@PathVariable Long customerId,
-																		@RequestBody BillPaymentRequest billPayment) {
-		return ResponseEntity.ok(billPaymentService.makeBillPayment(customerId, billPayment));
-	}
+    // Endpoint for adding a new bill payment operation.
+// Processes the bill payment operation based on the provided `customerId` and `billPayment` parameters
+// and returns the result in the ResponseEntity format.
+    @PostMapping("/{customerId}/post")
+    public ResponseEntity<BillPaymentResponse> addNewBillPaymentDetails(@PathVariable Long customerId,
+                                                                        @RequestBody BillPaymentRequest billPayment) {
+        // Returns the result of the bill payment operation performed in the BillPaymentService using ResponseEntity.ok.
+        return ResponseEntity.ok (billPaymentService.makeBillPayment (customerId, billPayment));
+    }
 
-	@GetMapping("/{billId}")
-	public ResponseEntity<BillPaymentResponse> viewAllBillPayments(@PathVariable Long billId,
-																   @RequestBody BillPaymentRequest paymentRequest) {
-		return ResponseEntity.ok(billPaymentService.viewBillPayments(billId, paymentRequest));
-	}
-	
+    // Endpoint for viewing all bill payments based on a predefined `billId`.
+// Retrieves information from the BillPaymentService based on the provided `billId` and,
+// optionally, the `paymentRequest` parameters.
+    @GetMapping("/{billId}")
+    public ResponseEntity<BillPaymentResponse> viewAllBillPayments(@PathVariable Long billId,
+                                                                   @RequestBody BillPaymentRequest paymentRequest) {
+        // Returns the information obtained from the BillPaymentService using ResponseEntity.ok.
+        return ResponseEntity.ok (billPaymentService.viewBillPayments (billId, paymentRequest));
+    }
+
+
 }

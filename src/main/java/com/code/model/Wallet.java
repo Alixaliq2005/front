@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,38 +16,41 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
+@Table(name = "wallet")
 public class Wallet {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private String walletName;
+    private String walletName;
 
-	private Double balance;
+    private Long accountNumber;
 
-	private Integer cvv;
+    private Double balance;
 
-	@JsonIgnore
-	@JsonFormat(pattern = "MM/yyyy")
-	private LocalDateTime endTime;
+    private Integer cvv;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private Customer customer;
+    @JsonFormat//    @JsonFormat(pattern = "MM/yyyy")
+    private LocalDateTime endTime;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
-	@JsonIgnore
-	private List<Transaction> transaction;
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Customer customer;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
-	@JsonIgnore
-	private List<BillPayment> billPayments;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @JsonIgnore
+    private List<Transaction> transaction;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
-	@JsonIgnore
-	private List<BeneficiaryDetail> beneficiaryDetails;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @JsonIgnore
+    private List<BillPayment> billPayments;
 
-	public Long getWalletId() {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @JsonIgnore
+    private List<BeneficiaryDetail> beneficiaryDetails;
+
+    public Long getWalletId() {
         return null;
     }
 }

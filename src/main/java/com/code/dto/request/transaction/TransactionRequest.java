@@ -19,10 +19,13 @@ public class TransactionRequest {
     @Enumerated(EnumType.STRING)
     TransactionType transactionType;
 
-    @JsonFormat(pattern = "dd.MM.yyyy")
-    LocalDateTime transactionDate;
+    String senderName;
+
+    String receiverName;
 
     Double amount;
 
     String description;
+
 }
+

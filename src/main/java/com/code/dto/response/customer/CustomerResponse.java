@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -14,8 +16,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomerResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userId;
 
     String userName;
@@ -27,4 +27,6 @@ public class CustomerResponse {
     String password;
 
     WalletResponse wallet;
+
+    String message;
 }

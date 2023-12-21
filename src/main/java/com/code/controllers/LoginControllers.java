@@ -18,8 +18,11 @@ public class LoginControllers {
 
 	private final LoginService loginService;
 
+	// Endpoint for handling user login requests.
+// Processes the login request based on the provided `loginData` parameter and returns the result in the ResponseEntity format.
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> loginHandler(@RequestBody LoginRequest loginData) {
+		// Returns the result of the login operation performed in the LoginService using ResponseEntity.ok.
 		return ResponseEntity.ok(loginService.logInAccount(loginData));
 	}
 

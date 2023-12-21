@@ -7,9 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface CustomerService {
 
-	ResponseEntity<?> createNewSignUp(Customer customer);
+    CustomerResponse createNewSignUp(CustomerRequest customerRequest);
 
-	CustomerResponse updateSignUpDetails(String mobileNo,CustomerRequest signUp);
-
-	ResponseEntity<?> confirmUserEmail(String confirmationToken);
+    CustomerResponse updateSignUpDetails(String mobileNo, CustomerRequest signUp);
 }

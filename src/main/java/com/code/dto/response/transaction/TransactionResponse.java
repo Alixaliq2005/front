@@ -15,12 +15,15 @@ public class TransactionResponse {
 
     Long transactionId;
 
-    TransactionType transactionType;
+    String senderName;
 
-    LocalDateTime transactionDate;
+    String receiverName;
+
+    TransactionType transactionType;
 
     Double amount;
 
     String description;
+
 
 }

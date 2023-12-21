@@ -1,5 +1,6 @@
 package com.code.dto.response.wallet;
 
+import com.code.dto.response.customer.CustomerResponse;
 import com.code.model.BeneficiaryDetail;
 import com.code.model.BillPayment;
 import com.code.model.Customer;
@@ -29,7 +30,7 @@ public class WalletResponse {
 
     Long cvv;
 
-    Customer customer;
+    CustomerResponse customer;
 
     List<Transaction> transaction;
 

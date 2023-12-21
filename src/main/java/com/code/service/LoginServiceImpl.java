@@ -17,54 +17,63 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-	private final CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
-	private final LogInRepository logInRepository;
+    private final LogInRepository logInRepository;
 
-	@Override
-	public LoginResponse logInAccount(LoginRequest loginData) {
-		// Find the customer by mobile number
-		Optional<Customer> customer = customerRepository.findByMobileNo(loginData.getMobileNo());
+    @Override
+    public LoginResponse logInAccount(LoginRequest loginData) {
+        try {
+            // Find the customer by mobile number
+            Optional<Customer> customer = customerRepository.findByMobileNo (loginData.getMobileNo ());
 
-		// If customer not found, throw an exception
-		if (customer.isEmpty()) {
-			throw new ApplicationException(Errors.USER_NOT_FOUND);
-		}
+            // If customer not found, throw an exception
+            if (customer.isEmpty ()) {
+                throw new ApplicationException (Errors.USER_NOT_FOUND);
+            }
 
-		// Retrieve the customer from Optional
-		Customer existingCustomer = customer.get();
+            // Retrieve the customer from Optional
+            Customer existingCustomer = customer.get ();
+            // Print for debugging (optional)
+            System.out.println (existingCustomer);
+            // Get the user ID from the existing customer
+            Long existingCustomerId = existingCustomer.getUserId ();
+            // Check if a session already exists for the user
+            Optional<Customer> currentSessionUser = customerRepository.findByUserId (existingCustomerId);
+            // If a session already exists, throw an exception
+            if (currentSessionUser.isEmpty ()) {
+                throw new ApplicationException (Errors.USER_NOT_FOUND);
+            }
 
-		// Print for debugging (optional)
-		System.out.println(existingCustomer);
+            // Check if the provided password matches the stored password
+            if (!existingCustomer.getPassword ().equals (loginData.getPassword ())) {
+                throw new ApplicationException (Errors.PASSWORD_DID_NOT_MATCH);
+            }
 
-		// Get the user ID from the existing customer
-		Long existingCustomerId = existingCustomer.getUserId();
+            // Save the login details
+            LogIn savedUser = LogIn.builder ()
+                    .mobileNo (loginData.getMobileNo ())
+                    .password (loginData.getPassword ())
+                    .build ();
 
-		// Check if a session already exists for the user
-		Optional<Customer> currentSessionUser = customerRepository.findByUserId(existingCustomerId);
+            logInRepository.save (savedUser);
 
-		// If a session already exists, throw an exception
-		if (currentSessionUser.isPresent()) {
-			throw new ApplicationException(Errors.USER_EXISTS);
-		}
-
-		// Check if the provided password matches the stored password
-		if (existingCustomer.getPassword().equals(loginData.getPassword())) {
-			// Save the login details
-			LogIn savedUser = LogIn.builder()
-					.mobileNo(loginData.getMobileNo())
-					.password(loginData.getPassword())
-					.build();
-
-			logInRepository.save(savedUser);
-
-			// Return a success message
-			return LoginResponse.builder()
-					.message(String.format("User logged in successfully: %s", savedUser.getMobileNo()))
-					.build();
-		} else {
-			// If the passwords don't match, throw an exception
-			throw new ApplicationException(Errors.PASSWORD_DID_NOT_MATCH);
-		}
-	}
+            // Return a success message
+            return LoginResponse.builder ()
+                    .message (String.format ("User logged in successfully: %s", savedUser.getMobileNo ()))
+                    .build ();
+        } catch (ApplicationException e) {
+            // Handle specific application exceptions
+            return LoginResponse.builder ()
+                    .message (e.getMessage ())
+                    .build ();
+        } catch (Exception e) {
+            // Log unexpected exceptions for debugging
+            e.printStackTrace ();
+            return LoginResponse.builder ()
+                    .message ("Internal Server Error")
+                    .build ();
+        }
+    }
 }
+

@@ -13,15 +13,14 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WalletRequest {
 
-     String walletName;
+    String walletName;
 
-     Long accountNumber;
+    Long accountNumber;
 
-     @JsonFormat(pattern = "MM/yyyy")
-     LocalDateTime endTime;
+    LocalDateTime endTime;
 
-     Integer cvv;
+    Integer cvv;
 
-     Double balance;
+    Double balance;
 
 }
